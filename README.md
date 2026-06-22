@@ -87,7 +87,7 @@ Slack 기능은 플랜, 관리자 설정, 워크스페이스 정책, Enterprise 
 추천 repository 이름은 `tiny-work-os-school`입니다.
 
 ```bash
-gh repo create jeewon-kang/tiny-work-os-school --public
+gh repo create starjw2010-cloud/tiny-work-os-school --public
 ```
 
 GitHub CLI가 추가 질문을 하면 빈 repository로 생성합니다. GitHub CLI를 쓰지 않는 경우 GitHub 웹에서 빈 repository를 만든 뒤 아래 remote 연결 단계를 진행합니다.
@@ -97,7 +97,7 @@ GitHub CLI가 추가 질문을 하면 빈 repository로 생성합니다. GitHub 
 ```bash
 git init
 git branch -M main
-git remote add origin git@github.com:jeewon-kang/tiny-work-os-school.git
+git remote add origin git@github.com:starjw2010-cloud/tiny-work-os-school.git
 ```
 
 이미 remote가 있다면 아래 명령으로 확인합니다.
@@ -119,7 +119,7 @@ git push -u origin main
 1. GitHub repository의 Settings > Pages로 이동합니다.
 2. Source를 `GitHub Actions`로 설정합니다.
 3. main 브랜치에 push하면 `.github/workflows/deploy-pages.yml` workflow가 실행됩니다.
-4. repository 경로 배포 테스트 URL은 https://jeewon-kang.github.io/tiny-work-os-school/ 입니다.
+4. repository 경로 배포 테스트 URL은 https://starjw2010-cloud.github.io/tiny-work-os-school/ 입니다.
 
 현재 workflow는 GitHub Pages repository URL 배포를 위해 `GITHUB_PAGES=true` 환경에서 빌드합니다. 이때 Next.js `basePath`와 `assetPrefix`는 `/tiny-work-os-school`로 설정됩니다.
 
@@ -159,7 +159,7 @@ tinyworkos.com
 
 ## 14. 예상 테스트 URL
 
-- GitHub Pages 기본 URL: https://jeewon-kang.github.io/tiny-work-os-school/
+- GitHub Pages 기본 URL: https://starjw2010-cloud.github.io/tiny-work-os-school/
 - 최종 custom domain 후보: https://tinyworkos.com/
 
 ## 15. 배포 전 체크리스트

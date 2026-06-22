@@ -4,7 +4,7 @@ export const siteConfig = {
   description: "Slack Help Center와 Developer Docs를 바탕으로 재구성한 비공식 실무형 교육 사이트",
   owner: "Jeewon Kang",
   githubRepoName: "tiny-work-os-school",
-  githubPagesUrl: "https://jeewon-kang.github.io/tiny-work-os-school/",
+  githubPagesUrl: "https://starjw2010-cloud.github.io/tiny-work-os-school/",
   customDomain: "https://tinyworkos.com/",
   customDomainHost: "tinyworkos.com",
   affiliationNotice: "Not affiliated with Slack Technologies, LLC.",
