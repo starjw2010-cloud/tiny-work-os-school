@@ -96,5 +96,13 @@ export const quizzes: QuizQuestion[] = [
     answer: "플랜과 권한에 따라 달라질 수 있음을 안내한다",
     explanation: "관리자/보안 기능은 고객 환경, 플랜, 권한, 정책에 따라 제공 범위가 달라질 수 있습니다.",
     relatedTerms: ["audit-log", "ekm", "scim"]
+  },
+  {
+    id: "quiz-13",
+    question: "Enterprise 구독에서 역할을 설명할 때 추가로 확인해야 하는 것은 무엇인가요?",
+    options: ["Enterprise 조직과 시스템 역할", "개인 테마 색상", "이모지 표시 순서", "DM 배경 이미지"],
+    answer: "Enterprise 조직과 시스템 역할",
+    explanation: "기본 워크스페이스 역할 외에도 Enterprise 조직 역할과 세분화된 시스템 역할이 등장할 수 있습니다.",
+    relatedTerms: ["enterprise-organization", "org-admin", "system-role"]
   }
 ];

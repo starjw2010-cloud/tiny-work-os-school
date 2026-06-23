@@ -13,13 +13,12 @@ const heroSteps = [
   "Workflow와 앱은 권한을 확인하며 연결합니다."
 ];
 
-const proofPoints = [
-  { label: "학습 과정", value: "6개", text: "입문, 사용, 개인 설정, 자동화, 관리, 실습" },
-  { label: "용어 카드", value: "116개", text: "고객 설명에 바로 쓰기 좋은 한 줄 설명" },
-  { label: "브랜드 안전", value: "비공식", text: "Slack 로고와 공식 제휴 표현 없이 구성" }
-];
-
 export default function HomePage() {
+  const proofPoints = [
+    { label: "학습 과정", value: "6개", text: "입문, 사용, 개인 설정, 자동화, 관리, 실습" },
+    { label: "용어 카드", value: `${terms.length}개`, text: "고객 설명에 바로 쓰기 좋은 한 줄 설명" },
+    { label: "브랜드 안전", value: "비공식", text: "Slack 로고와 공식 제휴 표현 없이 구성" }
+  ];
   const recommended = recommendedTermSlugs.slice(0, 8).map((slug) => terms.find((term) => term.slug === slug)).filter((term): term is (typeof terms)[number] => Boolean(term));
 
   return (
