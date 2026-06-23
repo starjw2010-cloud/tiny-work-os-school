@@ -84,9 +84,9 @@ export const quizzes: QuizQuestion[] = [
   {
     id: "quiz-11",
     question: "Enterprise Grid 표현은 이 사이트에서 어떻게 다루나요?",
-    options: ["legacy 또는 공식 문서 잔존 표현으로 제한적으로 다룬다", "현재 고객-facing 플랜명으로 강조한다", "일반 사용자 기능으로 설명한다", "Slack 앱 이름으로 설명한다"],
-    answer: "legacy 또는 공식 문서 잔존 표현으로 제한적으로 다룬다",
-    explanation: "고객-facing 설명에서는 Enterprise+와 Enterprise 조직 표현을 우선 사용합니다.",
+    options: ["기존 자료에 남은 표현으로 제한적으로 다룬다", "현재 고객 설명용 플랜명으로 강조한다", "일반 사용자 기능으로 설명한다", "Slack 앱 이름으로 설명한다"],
+    answer: "기존 자료에 남은 표현으로 제한적으로 다룬다",
+    explanation: "고객에게 설명할 때는 Enterprise+와 Enterprise 조직 표현을 우선 사용합니다.",
     relatedTerms: ["enterprise-grid", "enterprise-plus", "enterprise-organization"]
   },
   {

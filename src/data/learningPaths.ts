@@ -118,17 +118,17 @@ export const learningPaths: LearningPath[] = [
     id: "admin",
     title: "워크스페이스 관리",
     audience: "admin",
-    summary: "권한, 정책, 외부 협업, 데이터, Enterprise 조직 관리를 고객-facing 표현으로 정리합니다.",
+    summary: "권한, 정책, 외부 협업, 데이터, Enterprise 조직 관리를 고객에게 설명하기 좋은 표현으로 정리합니다.",
     sourceId: "admin-category",
     modules: [
       { id: "members", title: "멤버 초대와 계정 관리", terms: ["member-management", "member", "guest"], mockup: "member-admin", meaning: "입사, 이동, 퇴사에 맞춰 접근 권한을 관리합니다.", talk: "관리의 핵심은 누가 지금 들어와 있고 무엇을 볼 수 있는지입니다." },
       { id: "roles", title: "역할 변경과 권한 구조", terms: ["role", "permission", "workspace-admin"], mockup: "role-permission", meaning: "역할은 실제 권한 범위와 함께 설명해야 합니다.", talk: "역할 이름만으로 판단하지 말고 가능한 작업과 접근 범위를 확인해야 합니다." },
-      { id: "channels", title: "채널 관리와 채널명 규칙", terms: ["channel-management-tool", "channel-manager", "channel-naming-guidelines"], mockup: "channel-admin", meaning: "채널이 많아질수록 이름 규칙과 정리 기준이 필요합니다.", talk: "채널 구조는 Slack 운영의 정보 architecture입니다." },
+      { id: "channels", title: "채널 관리와 채널명 규칙", terms: ["channel-management-tool", "channel-manager", "channel-naming-guidelines"], mockup: "channel-admin", meaning: "채널이 많아질수록 이름 규칙과 정리 기준이 필요합니다.", talk: "채널 구조는 Slack 운영의 정보 구조입니다." },
       { id: "connect", title: "Slack Connect 승인과 외부 공유 관리", terms: ["slack-connect", "slack-connect-approval", "public-file-sharing"], mockup: "connect-policy", meaning: "외부 협업은 승인, 파일, 데이터 정책과 함께 봐야 합니다.", talk: "외부 협업은 채널을 여는 일이 아니라 공유 범위를 설계하는 일입니다." },
       { id: "shared-assets", title: "파일·Canvas·Lists 공유 정책", terms: ["canvas-settings", "lists-settings", "public-file-sharing"], mockup: "data-policy", meaning: "업무 지식과 파일이 어디까지 공유되는지 통제합니다.", talk: "Canvas와 Lists는 편리하지만 외부 공유 정책을 같이 확인해야 합니다." },
       { id: "apps-workflows", title: "앱과 워크플로 관리", terms: ["app-management", "workflow-manager", "app-approval"], mockup: "marketplace", meaning: "앱과 워크플로는 권한과 운영 책임자를 정해야 합니다.", talk: "자동화는 누가 만들고 누가 고치는지도 함께 정해야 합니다." },
       { id: "security-ai", title: "Slack AI, DLP, 보안 설정", terms: ["slack-ai-access", "dlp", "two-factor-authentication"], mockup: "security", meaning: "민감정보, AI 접근, 계정 보안을 정책으로 관리합니다.", talk: "AI와 DLP는 고객 환경별 정책 차이가 크므로 확인 항목으로 다뤄야 합니다." },
-      { id: "enterprise", title: "Enterprise+와 Enterprise 조직 단위 관리", terms: ["enterprise-plus", "enterprise-organization", "enterprise-grid"], mockup: "enterprise-plus", meaning: "고객-facing 설명에서는 Enterprise+와 Enterprise 조직 표현을 우선합니다.", talk: "Enterprise Grid는 현재 플랜명처럼 말하지 않고 기존 문서 잔존 표현으로 조심스럽게 다룹니다." },
+      { id: "enterprise", title: "Enterprise+와 Enterprise 조직 단위 관리", terms: ["enterprise-plus", "enterprise-organization", "enterprise-grid"], mockup: "enterprise-plus", meaning: "고객에게 설명할 때는 Enterprise+와 Enterprise 조직 표현을 우선합니다.", talk: "Enterprise Grid는 현재 플랜명처럼 말하지 않고 기존 자료에 남은 표현으로 조심스럽게 다룹니다." },
       { id: "data", title: "데이터, 감사 로그, 분석", terms: ["data-analytics", "audit-log", "data-retention"], mockup: "analytics", meaning: "운영 데이터와 감사 이벤트는 권한과 플랜 기준 안에서 확인합니다.", talk: "데이터 관리는 보고서가 아니라 보안과 운영 의사결정의 근거입니다." }
     ]
   }),

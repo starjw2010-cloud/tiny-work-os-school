@@ -22,7 +22,7 @@ type TermSeed = {
 const planCaution = "사용 가능 범위는 플랜, 관리자 설정, 워크스페이스 정책, Enterprise 조직 설정에 따라 달라질 수 있습니다. 실제 도입 전 고객 환경에서 확인하세요.";
 const securityCaution = "권한, 데이터 접근, 외부 공유, 보존 정책은 조직의 보안 기준과 관리자 설정에 따라 달라질 수 있습니다.";
 const workflowCaution = "Workflow Builder와 Connector 기능은 워크스페이스 정책, 앱 승인, 외부 계정 인증 여부에 따라 설정 방식이 달라질 수 있습니다.";
-const enterpriseGridCaution = "일부 공식 문서와 기존 자료에는 Enterprise Grid 표현이 남아 있을 수 있습니다. 본 사이트에서는 현재 고객-facing 설명 기준으로 Enterprise+와 Enterprise 조직 표현을 우선 사용합니다.";
+const enterpriseGridCaution = "일부 도움말 문서와 기존 자료에는 Enterprise Grid 표현이 남아 있을 수 있습니다. 이 사이트에서는 고객에게 설명할 때 Enterprise+와 Enterprise 조직 표현을 우선 사용합니다.";
 
 const defaultRelated: Record<TermCategory, string[]> = {
   basic: ["workspace", "channel", "thread"],
@@ -35,9 +35,12 @@ const defaultRelated: Record<TermCategory, string[]> = {
   troubleshooting: ["access-log", "notification", "search"]
 };
 
+const directlyVerifiedSourceIds = new Set(["canvas", "lists", "guest-roles", "roles", "pricing", "slack-connect", "ekm", "slackbot"]);
+
 function makeTerm(seed: TermSeed): Term {
   const source = getSource(seed.sourceId);
   const relatedTerms = seed.relatedTerms || defaultRelated[seed.category].filter((slug) => slug !== seed.slug).slice(0, 3);
+  const defaultFactStatus: FactStatus = directlyVerifiedSourceIds.has(seed.sourceId) ? "verified" : "needs-review";
 
   return {
     id: seed.slug,
@@ -51,20 +54,20 @@ function makeTerm(seed: TermSeed): Term {
       `${seed.koreanName}은 Slack 안에서 업무 맥락을 이해하거나 운영할 때 자주 만나는 개념입니다. 이름보다 “언제 쓰는가”를 함께 기억하면 훨씬 쉽습니다.`,
     easyAnalogy:
       seed.easyAnalogy ||
-      `회사 안의 작은 업무 도구함처럼 생각하면 됩니다. 필요한 순간에 꺼내 쓰되, 팀의 규칙과 권한 안에서 사용해야 합니다.`,
+      `업무 흐름 안에서 이 개념이 어떤 문제를 줄여주는지 보면 이해하기 쉽습니다. 기능 이름보다 사용되는 상황을 함께 보는 편이 좋습니다.`,
     businessExample: seed.businessExample,
     customerTalkTrack:
       seed.customerTalkTrack ||
-      `${seed.koreanName}은 Slack을 단순 대화방이 아니라 업무 기록과 실행이 이어지는 공간으로 설명할 때 좋은 예시입니다.`,
+      `${seed.koreanName}은 Slack에서 대화, 기록, 실행이 어떻게 이어지는지 설명할 때 함께 짚어볼 만한 개념입니다.`,
     commonMistake:
       seed.commonMistake ||
-      `${seed.koreanName}을 모든 상황에 무조건 적용되는 기능처럼 이해하는 경우가 많습니다. 실제 사용 범위는 설정과 권한을 함께 봐야 합니다.`,
+      `${seed.koreanName}을 이름만 보고 모든 워크스페이스에서 같은 방식으로 동작한다고 이해하기 쉽습니다. 실제 사용 범위는 설정과 권한을 함께 확인해야 합니다.`,
     caution: seed.caution || planCaution,
     relatedTerms,
     sourceUrl: source.url,
     sourceName: source.name,
     lastVerifiedAt: source.lastVerifiedAt,
-    factStatus: seed.factStatus || "verified",
+    factStatus: seed.factStatus || defaultFactStatus,
     screenMockupType: seed.screenMockupType
   };
 }
@@ -96,7 +99,7 @@ const seeds: TermSeed[] = [
   { slug: "mention", term: "Mention", koreanName: "멘션", category: "basic", oneLine: "@이름이나 @그룹으로 특정 사람의 주의를 부르는 방식입니다.", businessExample: "@manager 님에게 승인 기준 확인을 요청합니다.", sourceId: "using-category", screenMockupType: "mention", relatedTerms: ["user-group", "notification", "thread"] },
   { slug: "thread", term: "Thread", koreanName: "스레드", category: "basic", oneLine: "하나의 메시지에 대한 세부 답글을 모아두는 공간입니다.", businessExample: "공지 메시지 아래 스레드에 질문과 후속 작업을 모읍니다.", sourceId: "using-category", screenMockupType: "thread", relatedTerms: ["channel", "mention", "reaction"] },
   { slug: "reaction", term: "Reaction", koreanName: "반응", category: "basic", oneLine: "메시지에 이모지로 확인, 동의, 상태를 표시하는 방식입니다.", businessExample: "처리 완료된 요청에 체크 반응을 달아 상태를 표시합니다.", sourceId: "using-category", screenMockupType: "mention", relatedTerms: ["emoji-reaction", "workflow", "message-field"] },
-  { slug: "saved-item", term: "Saved Item", koreanName: "저장한 항목", category: "basic", oneLine: "나중에 다시 볼 메시지나 파일을 개인적으로 표시해두는 항목입니다.", businessExample: "다음 회의에서 확인할 정책 링크를 저장해둡니다.", sourceId: "using-category", screenMockupType: "sidebar" },
+  { slug: "saved-item", term: "Later", koreanName: "나중에 볼 항목", category: "basic", oneLine: "나중에 다시 확인할 메시지나 파일을 개인적으로 표시해두는 항목입니다.", businessExample: "다음 회의에서 확인할 정책 링크를 나중에 볼 항목으로 남겨둡니다.", sourceId: "using-category", screenMockupType: "sidebar", factStatus: "needs-review" },
   { slug: "pin", term: "Pin", koreanName: "고정", category: "basic", oneLine: "채널에서 중요한 메시지나 파일을 팀이 쉽게 찾도록 고정하는 방식입니다.", businessExample: "프로젝트 목표와 일정 안내 메시지를 채널에 고정합니다.", sourceId: "using-category", screenMockupType: "channel", relatedTerms: ["bookmark", "channel", "files"] },
   { slug: "bookmark", term: "Bookmark", koreanName: "북마크", category: "basic", oneLine: "자주 쓰는 링크와 자료를 채널에서 빠르게 찾도록 모아두는 방식입니다.", businessExample: "대시보드, 운영 문서, 회의록 링크를 채널 북마크로 정리합니다.", sourceId: "using-category", screenMockupType: "channel", relatedTerms: ["pin", "tab", "canvas"] },
   { slug: "tab", term: "Tab", koreanName: "탭", category: "basic", oneLine: "채널에서 관련 도구나 정보를 전환해 보는 상단 항목입니다.", businessExample: "채널 안에서 Canvas, Lists, 파일 정보를 탭으로 확인합니다.", sourceId: "using-category", screenMockupType: "channel", relatedTerms: ["canvas", "lists", "bookmark"] },
@@ -148,7 +151,7 @@ const seeds: TermSeed[] = [
   { slug: "slack-marketplace", term: "Slack Marketplace", koreanName: "Slack Marketplace", category: "automation", oneLine: "Slack에서 사용할 수 있는 앱과 통합을 찾아보는 공간입니다.", businessExample: "운영팀이 승인된 앱을 찾아 워크스페이스에 요청합니다.", sourceId: "automation-category", screenMockupType: "marketplace", caution: securityCaution },
   { slug: "app-permission", term: "App Permission", koreanName: "앱 권한", category: "automation", oneLine: "앱이 읽거나 수행할 수 있는 데이터와 작업 범위입니다.", businessExample: "파일 접근 권한이 필요한 앱인지 보안팀이 검토합니다.", sourceId: "admin-category", screenMockupType: "marketplace", caution: securityCaution },
   { slug: "app-approval", term: "App Approval", koreanName: "앱 승인", category: "automation", oneLine: "워크스페이스에서 앱 설치를 관리자가 검토하고 허용하는 절차입니다.", businessExample: "새 앱 요청이 들어오면 보안 기준에 맞는지 승인 전에 확인합니다.", sourceId: "admin-category", screenMockupType: "marketplace", caution: securityCaution },
-  { slug: "shortcut", term: "Shortcut", koreanName: "바로 가기", category: "automation", oneLine: "사용자가 특정 작업이나 워크플로를 빠르게 시작하는 실행入口입니다.", businessExample: "채널에서 고객 문의 등록 바로 가기를 눌러 워크플로를 시작합니다.", sourceId: "automation-category", screenMockupType: "workflow", factStatus: "needs-review" },
+  { slug: "shortcut", term: "Shortcut", koreanName: "바로 가기", category: "automation", oneLine: "사용자가 특정 작업이나 워크플로를 빠르게 시작하는 진입점입니다.", businessExample: "채널에서 고객 문의 등록 바로 가기를 눌러 워크플로를 시작합니다.", sourceId: "automation-category", screenMockupType: "workflow", factStatus: "needs-review" },
   { slug: "slash-command", term: "Slash Command", koreanName: "슬래시 명령어", category: "automation", oneLine: "메시지 입력창에서 /명령어로 특정 앱 동작을 실행하는 방식입니다.", businessExample: "/helpdesk 명령어로 IT 요청 양식을 엽니다.", sourceId: "automation-category", screenMockupType: "message-composer", factStatus: "needs-review" },
   { slug: "workflow-builder", term: "Workflow Builder", koreanName: "워크플로 빌더", category: "automation", oneLine: "반복 업무를 시작 조건과 단계로 구성해 자동화하는 도구입니다.", businessExample: "휴가 신청을 받고 승인 요청과 기록 저장을 자동화합니다.", sourceId: "workflow-builder", screenMockupType: "workflow", factStatus: "unstable", caution: workflowCaution },
   { slug: "workflow", term: "Workflow", koreanName: "워크플로", category: "automation", oneLine: "업무가 시작되고 처리되는 절차를 Slack 안에서 단계로 만든 흐름입니다.", businessExample: "구매 요청 접수부터 승인, 알림, 기록까지 하나의 흐름으로 구성합니다.", sourceId: "workflow-builder", screenMockupType: "workflow", factStatus: "unstable", caution: workflowCaution },
@@ -164,10 +167,10 @@ const seeds: TermSeed[] = [
   { slug: "workflow-activity-log", term: "Workflow Activity Log", koreanName: "워크플로 활동 로그", category: "automation", oneLine: "워크플로 실행 이력과 문제를 확인하는 운영 로그입니다.", businessExample: "신청 알림이 누락됐을 때 활동 로그로 어느 단계에서 실패했는지 확인합니다.", sourceId: "automation-category", screenMockupType: "admin", factStatus: "unstable", caution: workflowCaution },
   { slug: "third-party-authentication", term: "Third-party Authentication", koreanName: "타사 계정 인증", category: "automation", oneLine: "외부 서비스와 연결하기 위해 해당 서비스 계정 권한을 확인하는 절차입니다.", businessExample: "Google Sheets에 행을 추가하려면 연결 계정 인증이 필요할 수 있습니다.", sourceId: "connectors", screenMockupType: "connector", factStatus: "unstable", caution: workflowCaution },
   { slug: "google-sheets-connector", term: "Google Sheets Connector", koreanName: "Google Sheets 커넥터", category: "automation", oneLine: "워크플로 응답이나 처리 결과를 Google Sheets에 기록하는 연결 단계입니다.", businessExample: "휴가 신청 내역과 승인 결과를 테스트 시트에 먼저 저장해 검증합니다.", sourceId: "connectors", screenMockupType: "connector", factStatus: "unstable", caution: "Google Sheets 연동은 신청 내역 저장에 유용하지만, 워크스페이스 정책에 따라 앱 승인과 계정 인증이 필요할 수 있습니다. 또한 시트 구조에 따라 행 추가 위치가 달라질 수 있으므로 운영 전 테스트 시트에서 먼저 검증하세요." },
-  { slug: "mcp", term: "MCP", koreanName: "MCP", category: "automation", oneLine: "AI와 도구 연결 맥락에서 언급되는 프로토콜 개념입니다.", businessExample: "AI Agent와 내부 도구 연결 가능성을 검토할 때 MCP 지원 여부를 확인합니다.", sourceId: "automation-category", screenMockupType: "connector", factStatus: "needs-review", caution: "MCP 관련 Slack 기능과 지원 범위는 빠르게 변할 수 있어 2026년 06월 이후 최신 공식 문서 확인이 필요합니다." },
-  { slug: "ai-agent", term: "AI Agent", koreanName: "AI Agent", category: "automation", oneLine: "특정 작업을 돕는 AI 기반 에이전트 개념입니다.", businessExample: "고객 문의 요약이나 내부 업무 안내 보조 기능을 검토할 때 관련 정책을 확인합니다.", sourceId: "automation-category", screenMockupType: "connector", factStatus: "needs-review", caution: "AI Agent 기능은 제품 변경과 관리자 정책 영향이 크므로 단정하지 않고 최신 문서를 확인해야 합니다." },
-  { slug: "slackbot", term: "Slackbot", koreanName: "Slackbot", category: "automation", oneLine: "Slack 안에서 안내, 자동 응답, 도움말 성격의 메시지를 제공하는 봇입니다.", businessExample: "새 사용자가 기본 사용법 안내를 받을 때 Slackbot 메시지를 참고합니다.", sourceId: "admin-category", screenMockupType: "workflow", factStatus: "unstable" },
-  { slug: "slackbot-skill", term: "Slackbot Skill", koreanName: "Slackbot 스킬", category: "automation", oneLine: "Slackbot이 특정 작업을 수행하도록 관리되는 기능 영역입니다.", businessExample: "관리자가 Slackbot 관련 설정 가능 범위를 검토합니다.", sourceId: "admin-category", screenMockupType: "admin", factStatus: "needs-review", caution: "Slackbot Skill은 기능 제공 범위와 명칭 변경 가능성이 있어 최신 관리자 문서 확인이 필요합니다." },
+  { slug: "mcp", term: "MCP", koreanName: "MCP", category: "automation", oneLine: "Slack의 기본 사용자 기능명이라기보다 AI와 도구 연동을 검토할 때 함께 등장할 수 있는 기술 표준입니다.", businessExample: "AI Agent와 내부 도구 연결 가능성을 검토할 때 MCP 지원 여부를 별도 확인 항목으로 둡니다.", sourceId: "automation-category", screenMockupType: "connector", factStatus: "needs-review", caution: "MCP는 Slack 일반 사용자를 위한 고정 메뉴명으로 단정하지 않습니다. 관련 지원 범위는 최신 공식 문서와 제품 발표를 따로 확인해야 합니다." },
+  { slug: "ai-agent", term: "AI Agent", koreanName: "AI 에이전트", category: "automation", oneLine: "Slackbot, Agentforce처럼 업무를 보조하는 AI 기능을 검토할 때 쓰는 일반 개념입니다.", businessExample: "고객 문의 요약이나 내부 업무 안내 보조 기능을 검토할 때 관련 정책을 확인합니다.", sourceId: "pricing", screenMockupType: "connector", factStatus: "needs-review", caution: "AI Agent 관련 기능은 제품 변경과 관리자 정책 영향이 크므로 단정하지 않고 최신 문서를 확인해야 합니다." },
+  { slug: "slackbot", term: "Slackbot", koreanName: "Slackbot", category: "automation", oneLine: "Slack 안에서 개인 업무를 돕는 AI 에이전트와 안내 기능 맥락으로 쓰이는 기능명입니다.", businessExample: "사용자가 대화와 파일 맥락을 바탕으로 필요한 정보를 찾거나 요약 기능을 검토합니다.", sourceId: "slackbot", screenMockupType: "workflow", factStatus: "unstable", caution: "Slackbot의 AI 기능과 제공 범위는 플랜, 지역, 관리자 정책에 따라 달라질 수 있습니다." },
+  { slug: "slackbot-skill", term: "Slackbot Skill", koreanName: "Slackbot 스킬", category: "automation", oneLine: "Slackbot이 특정 작업을 더 잘 수행하도록 연결되는 스킬 또는 확장 기능 맥락입니다.", businessExample: "관리자가 Slackbot 관련 설정 가능 범위와 사용 정책을 검토합니다.", sourceId: "slackbot", screenMockupType: "admin", factStatus: "needs-review", caution: "Slackbot Skill은 기능 제공 범위와 명칭 변경 가능성이 있어 최신 제품 문서와 관리자 정책 확인이 필요합니다." },
   { slug: "custom-integration", term: "Custom Integration", koreanName: "사용자 지정 통합", category: "automation", oneLine: "조직 업무에 맞게 Slack과 외부 시스템을 연결하는 맞춤형 연동입니다.", businessExample: "내부 승인 시스템 이벤트를 Slack 채널에 알리는 연동을 만듭니다.", sourceId: "automation-category", screenMockupType: "connector", factStatus: "needs-review", caution: securityCaution },
 
   { slug: "workspace-primary-owner", term: "Workspace Primary Owner", koreanName: "워크스페이스 기본 소유자", category: "admin-security", oneLine: "워크스페이스의 최상위 소유 책임을 갖는 역할입니다.", businessExample: "소유권 이전이나 핵심 설정 변경 시 기본 소유자가 확인합니다.", sourceId: "roles", screenMockupType: "role-permission", factStatus: "unstable", caution: planCaution },
@@ -184,17 +187,17 @@ const seeds: TermSeed[] = [
   { slug: "channel-manager", term: "Channel Manager", koreanName: "채널 매니저", category: "admin-security", oneLine: "특정 채널의 운영과 멤버 관리를 맡는 역할 개념입니다.", businessExample: "프로젝트 채널 매니저가 주제, 멤버, 운영 규칙을 관리합니다.", sourceId: "admin-category", screenMockupType: "channel-admin", factStatus: "unstable" },
   { slug: "posting-permission", term: "Posting Permission", koreanName: "게시 권한", category: "admin-security", oneLine: "특정 채널에 누가 메시지를 게시할 수 있는지 정하는 설정입니다.", businessExample: "공지 채널은 관리자만 게시하고 팀원은 반응만 남기도록 설정합니다.", sourceId: "admin-category", screenMockupType: "channel-admin", caution: securityCaution },
   { slug: "channel-naming-guidelines", term: "Channel Naming Guidelines", koreanName: "채널명 규칙", category: "admin-security", oneLine: "채널 이름을 일관되게 만들기 위한 조직 규칙입니다.", businessExample: "proj-, team-, notice- 접두사를 정해 채널 목적을 쉽게 파악합니다.", sourceId: "admin-category", screenMockupType: "channel-admin" },
-  { slug: "slack-connect", term: "Slack Connect", koreanName: "외부 조직 협업", category: "collaboration", oneLine: "외부 조직과 채널 또는 대화로 함께 일하는 협업 방식입니다.", businessExample: "고객사와 파트너사가 공동 채널에서 일정과 자료를 주고받습니다.", sourceId: "using-category", screenMockupType: "connect", factStatus: "unstable", caution: "외부 협업은 접근 범위, 파일 공유, 승인 정책, 데이터 관리 기준을 함께 확인해야 합니다.", relatedTerms: ["slack-connect-approval", "guest", "public-file-sharing"] },
+  { slug: "slack-connect", term: "Slack Connect", koreanName: "외부 조직 협업", category: "collaboration", oneLine: "회사 밖의 파트너, 공급업체, 고객과 채널이나 다이렉트 메시지로 협업하는 방식입니다.", businessExample: "고객사와 파트너사가 공동 채널에서 일정과 자료를 주고받습니다.", sourceId: "slack-connect", screenMockupType: "connect", factStatus: "verified", caution: "외부 협업은 접근 범위, 파일 공유, 승인 정책, 데이터 관리 기준을 함께 확인해야 합니다.", relatedTerms: ["slack-connect-approval", "guest", "public-file-sharing"] },
   { slug: "slack-connect-approval", term: "Slack Connect Approval", koreanName: "Slack Connect 승인", category: "collaboration", oneLine: "외부 조직 연결 요청을 관리자가 검토하고 허용하는 절차입니다.", businessExample: "고객사 채널 연결 요청을 보안팀 승인 후 진행합니다.", sourceId: "admin-category", screenMockupType: "connect-policy", factStatus: "unstable", caution: securityCaution },
   { slug: "public-file-sharing", term: "Public File Sharing", koreanName: "공개 파일 공유", category: "admin-security", oneLine: "파일이 외부에 공개적으로 공유될 수 있는 범위를 관리하는 설정입니다.", businessExample: "외부 공유 링크 사용을 제한해 고객 정보 유출을 줄입니다.", sourceId: "admin-category", screenMockupType: "data-policy", factStatus: "unstable", caution: securityCaution },
-  { slug: "dlp", term: "DLP", koreanName: "데이터 손실 방지", category: "governance", oneLine: "민감정보가 부적절하게 공유되지 않도록 탐지하고 통제하는 보안 영역입니다.", businessExample: "고객 정보가 외부 채널에 공유되는지 보안 정책으로 점검합니다.", sourceId: "admin-category", screenMockupType: "security", factStatus: "needs-review", caution: securityCaution },
-  { slug: "slack-ai-access", term: "Slack AI Access", koreanName: "Slack AI 접근 권한", category: "governance", oneLine: "Slack AI 기능을 누가 어떤 범위에서 사용할 수 있는지 관리하는 설정입니다.", businessExample: "민감한 채널에서 AI 접근 제한이 필요한지 검토합니다.", sourceId: "admin-category", screenMockupType: "security", factStatus: "unstable", caution: "Slack AI 관련 기능과 접근 제한은 빠르게 바뀔 수 있어 최신 공식 문서와 관리자 정책 확인이 필요합니다." },
+  { slug: "dlp", term: "DLP", koreanName: "데이터 손실 방지", category: "governance", oneLine: "민감정보나 기밀 데이터가 외부로 부적절하게 공유될 위험을 줄이기 위한 보안 통제 영역입니다.", businessExample: "고객 정보가 외부 채널에 공유되는지 보안 정책으로 점검합니다.", sourceId: "pricing", screenMockupType: "security", factStatus: "needs-review", caution: "Slack Connect DLP 등 세부 제공 범위는 플랜과 보안 정책에 따라 달라질 수 있습니다." },
+  { slug: "slack-ai-access", term: "Slack AI Access", koreanName: "Slack AI 접근 권한", category: "governance", oneLine: "Slack AI 기능의 사용 가능 범위와 정책을 관리 관점에서 확인하는 항목입니다.", businessExample: "민감한 채널에서 AI 기능 사용 제한이 필요한지 검토합니다.", sourceId: "pricing", screenMockupType: "security", factStatus: "unstable", caution: "Slack AI 관련 기능과 접근 제한은 빠르게 바뀔 수 있어 최신 공식 문서와 관리자 정책 확인이 필요합니다." },
   { slug: "canvas-settings", term: "Canvas Settings", koreanName: "Canvas 설정", category: "admin-security", oneLine: "Canvas 생성, 공유, 템플릿 사용 범위를 관리하는 설정입니다.", businessExample: "외부 채널에서 Canvas 공유가 가능한지 관리자가 확인합니다.", sourceId: "admin-category", screenMockupType: "data-policy", factStatus: "unstable", caution: securityCaution },
   { slug: "lists-settings", term: "Lists Settings", koreanName: "Lists 설정", category: "admin-security", oneLine: "Lists 사용, 공유, 템플릿 권한 범위를 관리하는 설정입니다.", businessExample: "팀별 Lists 생성 권한과 외부 공유 가능 여부를 검토합니다.", sourceId: "admin-category", screenMockupType: "data-policy", factStatus: "unstable", caution: securityCaution },
   { slug: "salesforce-channel", term: "Salesforce Channel", koreanName: "Salesforce 채널", category: "collaboration", oneLine: "Salesforce 업무와 Slack 채널 협업을 연결하는 채널 개념입니다.", businessExample: "중요 계정의 업데이트를 영업 채널에서 함께 확인합니다.", sourceId: "admin-category", screenMockupType: "connect", factStatus: "needs-review", caution: "Salesforce 권한, Slack 앱 승인, 고객 데이터 보호 정책을 반드시 함께 검토하세요." },
-  { slug: "enterprise-plus", term: "Enterprise+", koreanName: "Enterprise+", category: "governance", oneLine: "대규모 조직과 보안 요구가 높은 고객을 위한 Slack의 엔터프라이즈급 플랜 맥락입니다.", businessExample: "보안팀이 감사 로그, 데이터 정책, 조직 단위 관리를 검토합니다.", sourceId: "pricing", screenMockupType: "enterprise-plus", factStatus: "unstable", caution: "Enterprise+ 기능과 명칭, 포함 범위는 계약과 최신 플랜 정보에 따라 달라질 수 있습니다.", relatedTerms: ["enterprise-organization", "audit-log", "ekm"] },
-  { slug: "enterprise-organization", term: "Enterprise Organization", koreanName: "Enterprise 조직", category: "governance", oneLine: "여러 워크스페이스와 조직 단위 정책을 중앙에서 관리하는 구조입니다.", businessExample: "본사, 지역, 사업부 워크스페이스를 조직 정책 아래에서 운영합니다.", sourceId: "admin-category", screenMockupType: "enterprise-plus", factStatus: "unstable", caution: planCaution, relatedTerms: ["enterprise-plus", "org-admin", "workspace"] },
-  { slug: "enterprise-grid", term: "Enterprise Grid", koreanName: "Enterprise Grid", category: "governance", oneLine: "일부 공식 문서와 기존 자료에 남아 있는 엔터프라이즈 조직 구조 관련 표현입니다.", businessExample: "과거 자료를 읽을 때 Enterprise Grid 표현이 나오면 현재 설명에서는 Enterprise 조직 맥락으로 확인합니다.", sourceId: "admin-category", screenMockupType: "enterprise-plus", factStatus: "unstable", caution: enterpriseGridCaution, relatedTerms: ["enterprise-plus", "enterprise-organization", "audit-log"] },
+  { slug: "enterprise-plus", term: "Enterprise+", koreanName: "Enterprise+", category: "governance", oneLine: "대규모 조직을 위한 Slack의 엔터프라이즈 플랜으로, 고급 보안·관리·AI 기능 범위를 함께 검토하는 맥락입니다.", businessExample: "보안팀이 감사 로그, 데이터 정책, 조직 단위 관리를 검토합니다.", sourceId: "pricing", screenMockupType: "enterprise-plus", factStatus: "verified", caution: "Enterprise+ 기능과 포함 범위는 계약, 지역, 최신 플랜 정보에 따라 달라질 수 있습니다.", relatedTerms: ["enterprise-organization", "audit-log", "ekm"] },
+  { slug: "enterprise-organization", term: "Enterprise Organization", koreanName: "Enterprise 조직", category: "governance", oneLine: "Enterprise+ 맥락에서 여러 워크스페이스와 조직 단위 정책을 중앙에서 관리하는 구조입니다.", businessExample: "본사, 지역, 사업부 워크스페이스를 조직 정책 아래에서 운영합니다.", sourceId: "admin-category", screenMockupType: "enterprise-plus", factStatus: "unstable", caution: planCaution, relatedTerms: ["enterprise-plus", "org-admin", "workspace"] },
+  { slug: "enterprise-grid", term: "Enterprise Grid", koreanName: "Enterprise Grid(기존 표현)", category: "governance", oneLine: "일부 도움말 문서와 과거 자료에 남아 있는 엔터프라이즈 조직 구조 관련 기존 표현입니다.", businessExample: "과거 자료를 읽을 때 Enterprise Grid 표현이 나오면 현재 설명에서는 Enterprise 조직 맥락으로 확인합니다.", sourceId: "admin-category", screenMockupType: "enterprise-plus", factStatus: "unstable", caution: enterpriseGridCaution, relatedTerms: ["enterprise-plus", "enterprise-organization", "audit-log"] },
   { slug: "org-primary-owner", term: "Org Primary Owner", koreanName: "조직 기본 소유자", category: "admin-security", oneLine: "Enterprise 조직 단위에서 가장 높은 소유 책임을 갖는 역할입니다.", businessExample: "조직 수준 보안 정책과 소유권 관련 중요 변경을 검토합니다.", sourceId: "roles", screenMockupType: "role-permission", factStatus: "unstable", caution: planCaution },
   { slug: "org-owner", term: "Org Owner", koreanName: "조직 소유자", category: "admin-security", oneLine: "Enterprise 조직의 정책과 관리 설정 일부를 운영하는 상위 역할입니다.", businessExample: "조직 수준 앱 정책과 워크스페이스 관리 기준을 검토합니다.", sourceId: "roles", screenMockupType: "role-permission", factStatus: "unstable" },
   { slug: "org-admin", term: "Org Admin", koreanName: "조직 관리자", category: "admin-security", oneLine: "Enterprise 조직의 운영 설정과 멤버 관리 일부를 담당하는 관리자 역할입니다.", businessExample: "워크스페이스 간 정책 적용과 멤버 관리를 지원합니다.", sourceId: "roles", screenMockupType: "role-permission", factStatus: "unstable" },
@@ -202,7 +205,7 @@ const seeds: TermSeed[] = [
   { slug: "data-analytics", term: "Data Analytics", koreanName: "데이터 분석", category: "governance", oneLine: "사용량, 참여도, 워크스페이스 운영 상태를 분석하는 관리 영역입니다.", businessExample: "채널 활동과 앱 사용 현황을 보고 운영 개선 포인트를 찾습니다.", sourceId: "admin-category", screenMockupType: "analytics", factStatus: "unstable", caution: securityCaution },
   { slug: "audit-log", term: "Audit Log", koreanName: "감사 로그", category: "governance", oneLine: "보안과 관리 이벤트를 추적하기 위한 로그 데이터입니다.", businessExample: "앱 설치, 로그인, 멤버 변경 같은 이벤트를 보안팀이 점검합니다.", sourceId: "audit-logs", screenMockupType: "audit-log", factStatus: "unstable", caution: "조회 가능 이벤트, 보존 기간, API 접근은 플랜과 권한에 따라 달라질 수 있습니다." },
   { slug: "data-retention", term: "Data Retention", koreanName: "데이터 보존", category: "governance", oneLine: "메시지와 파일 같은 데이터를 얼마나 오래 보관할지 정하는 정책입니다.", businessExample: "법무 요구에 맞춰 메시지 보존 기간을 설정합니다.", sourceId: "admin-category", screenMockupType: "data-policy", factStatus: "unstable", caution: securityCaution },
-  { slug: "ekm", term: "EKM", koreanName: "엔터프라이즈 키 관리", category: "governance", oneLine: "암호화 키 관리 통제를 강화하기 위한 엔터프라이즈 보안 기능입니다.", businessExample: "규제가 강한 산업에서 데이터 접근 통제 강화를 검토합니다.", sourceId: "admin-category", screenMockupType: "security", factStatus: "unstable", caution: "EKM 사용 가능 여부와 운영 방식은 계약, 플랜, 보안 아키텍처 검토가 필요합니다." },
+  { slug: "ekm", term: "EKM", koreanName: "엔터프라이즈 키 관리", category: "governance", oneLine: "조직이 암호화 키 통제와 접근 철회를 강화할 때 검토하는 엔터프라이즈 보안 기능입니다.", businessExample: "규제가 강한 산업에서 데이터 접근 통제 강화를 검토합니다.", sourceId: "ekm", screenMockupType: "security", factStatus: "unstable", caution: "EKM 사용 가능 여부와 운영 방식은 계약, 플랜, 보안 아키텍처 검토가 필요합니다." },
   { slug: "scim", term: "SCIM", koreanName: "사용자 프로비저닝", category: "governance", oneLine: "사용자 생성, 변경, 비활성화를 외부 ID 시스템과 자동으로 맞추는 API 표준입니다.", businessExample: "퇴사자가 HR 시스템에서 비활성화되면 Slack 계정도 함께 정리되도록 설계합니다.", sourceId: "scim", screenMockupType: "security", factStatus: "unstable", caution: "SCIM API 사용 가능 여부, 토큰 권한, IdP 연동 방식은 플랜과 관리자 정책에 따라 확인해야 합니다." }
 ];
 
