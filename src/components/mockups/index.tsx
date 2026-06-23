@@ -7,18 +7,18 @@ function MockFrame({ title, caption, items }: { title: string; caption: string; 
   return (
     <div className="rounded-lg border border-line bg-white p-3 shadow-soft">
       <div className="mb-2 flex items-center justify-between gap-2">
-        <p className="font-black text-ink">{title}</p>
-        <span className="rounded-md bg-softPurple px-2 py-0.5 text-[11px] font-bold text-deepPurple">교육용</span>
+        <p className="text-sm font-black text-ink">{title}</p>
+        <span className="rounded-full bg-softPurple px-2 py-0.5 text-[10px] font-bold text-deepPurple">교육용</span>
       </div>
       <div className="grid gap-1.5 rounded-lg border border-line bg-softPurple p-2">
         {items.map((item) => (
-          <div className="rounded-md bg-white px-2.5 py-1.5 text-xs font-semibold leading-5 text-ink shadow-sm" key={item}>
+          <div className="rounded-md bg-white px-2.5 py-1.5 text-[11px] font-semibold leading-5 text-ink shadow-sm" key={item}>
             {item}
           </div>
         ))}
       </div>
       <p className="mt-2 text-xs font-bold leading-5 text-deepPurple">{caption}</p>
-      <p className="mt-2 rounded-md border border-line bg-white px-2 py-1.5 text-[11px] leading-4 text-muted">{notice}</p>
+      <p className="mt-1.5 text-[10px] leading-4 text-muted">{notice}</p>
     </div>
   );
 }

@@ -24,7 +24,7 @@ export function Header() {
             <span className="block text-xs font-semibold text-muted">{siteConfig.subtitle}</span>
           </span>
         </Link>
-        <nav className="flex max-w-full gap-1 overflow-x-auto rounded-lg border border-line bg-white p-1 text-sm shadow-sm lg:flex-wrap lg:justify-end">
+        <nav className="no-scrollbar flex max-w-full gap-1 overflow-x-auto rounded-lg border border-line bg-white p-1 text-sm shadow-sm lg:flex-wrap lg:justify-end">
           {navItems.map((item) => (
             <Link
               className="focus-ring whitespace-nowrap rounded-md px-3 py-2 font-bold text-muted transition hover:bg-softPurple hover:text-primary"

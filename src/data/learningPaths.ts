@@ -1,4 +1,5 @@
 import { getSource } from "@/data/sources";
+import { terms as termCatalog } from "@/data/terms";
 import type { LearningModule, LearningPath, MockupType, TrackId } from "@/types/content";
 
 type ModuleSeed = {
@@ -12,11 +13,27 @@ type ModuleSeed = {
   caution?: string;
 };
 
+const termLabelMap = new Map(
+  termCatalog.map((term) => [
+    term.slug,
+    term.koreanName === term.term ? term.term : `${term.koreanName}(${term.term})`
+  ])
+);
+
+function readableTerm(slug: string) {
+  return termLabelMap.get(slug) || slug;
+}
+
 function module(seed: ModuleSeed): LearningModule {
+  const labels = seed.terms.map(readableTerm);
   return {
     id: seed.id,
     title: seed.title,
-    whatYouLearn: seed.terms.map((term) => `${term} 개념을 실제 업무 흐름 안에서 이해합니다.`),
+    whatYouLearn: [
+      `${labels.join(", ")}의 쓰임을 구분합니다.`,
+      "어디에서 확인하고 언제 쓰는지 화면 흐름과 연결합니다.",
+      "고객 설명 전에 권한, 정책, 사용 범위를 함께 확인합니다."
+    ],
     practicalMeaning: seed.meaning,
     relatedTerms: seed.terms,
     screenMockupType: seed.mockup,
