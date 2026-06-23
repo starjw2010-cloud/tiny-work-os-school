@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import type { QuizQuestion } from "@/types/content";
 
-export function QuizClient({ quizzes }: { quizzes: QuizQuestion[] }) {
+export function QuizClient({ quizzes, termLabels }: { quizzes: QuizQuestion[]; termLabels: Record<string, string> }) {
   const [answers, setAnswers] = useState<Record<string, string>>({});
 
   return (
@@ -32,7 +32,11 @@ export function QuizClient({ quizzes }: { quizzes: QuizQuestion[] }) {
               </div>
             ) : null}
             <div className="mt-4 flex flex-wrap gap-2">
-              {quiz.relatedTerms.map((slug) => <Link className="rounded-md border border-line px-2 py-1 text-xs font-bold text-primary" href={'/terms/' + slug} key={slug}>{slug}</Link>)}
+              {quiz.relatedTerms.map((slug) => (
+                <Link className="rounded-md border border-line px-2 py-1 text-xs font-bold text-primary" href={'/terms/' + slug} key={slug}>
+                  {termLabels[slug] || slug}
+                </Link>
+              ))}
             </div>
           </article>
         );

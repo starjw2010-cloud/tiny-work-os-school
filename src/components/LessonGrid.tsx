@@ -1,23 +1,12 @@
 import Link from "next/link";
 import { TermMockup } from "@/components/mockups";
-import { terms } from "@/data/terms";
+import { getTermLabel } from "@/data/terms";
 import type { LearningLesson, LearningModule } from "@/types/content";
 
 type LessonLike = LearningLesson | LearningModule;
 
-const termLabelMap = new Map(
-  terms.map((term) => [
-    term.slug,
-    term.koreanName === term.term ? term.term : `${term.koreanName} (${term.term})`
-  ])
-);
-
 function getMockup(item: LessonLike) {
   return "mockupType" in item ? item.mockupType : item.screenMockupType;
-}
-
-function getTermLabel(slug: string) {
-  return termLabelMap.get(slug) || slug;
 }
 
 export function LessonGrid({ items }: { items: LessonLike[] }) {

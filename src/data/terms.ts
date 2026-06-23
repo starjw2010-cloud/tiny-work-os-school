@@ -230,6 +230,12 @@ export function getTermBySlug(slug: string) {
   return terms.find((term) => term.slug === slug);
 }
 
+export function getTermLabel(slug: string) {
+  const term = getTermBySlug(slug);
+  if (!term) return slug;
+  return term.koreanName === term.term ? term.term : `${term.koreanName} (${term.term})`;
+}
+
 export function getTermsByCategory(category: TermCategory) {
   return terms.filter((term) => term.category === category);
 }

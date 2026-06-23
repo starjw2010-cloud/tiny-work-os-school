@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FactStatusBadge, TermCategoryBadge } from "@/components/Badge";
 import { TermMockup } from "@/components/mockups";
-import { getTermBySlug, terms } from "@/data/terms";
+import { getTermBySlug, getTermLabel, terms } from "@/data/terms";
 
 type TermDetailPageProps = { params: Promise<{ slug: string }> };
 
@@ -38,11 +38,11 @@ export default async function TermDetailPage({ params }: TermDetailPageProps) {
           <section className="rounded-lg border border-line bg-softPurple p-5">
             <h2 className="text-lg font-black text-ink">관련 용어</h2>
             <div className="mt-3 flex flex-wrap gap-2">
-              {relatedTerms.map((related) => <Link className="rounded-md bg-white px-3 py-2 text-sm font-bold text-primary shadow-sm" href={'/terms/' + related.slug} key={related.slug}>{related.term} ({related.koreanName})</Link>)}
+              {relatedTerms.map((related) => <Link className="rounded-md bg-white px-3 py-2 text-sm font-bold text-primary shadow-sm" href={'/terms/' + related.slug} key={related.slug}>{getTermLabel(related.slug)}</Link>)}
             </div>
           </section>
           <section className="rounded-lg border border-line bg-white p-5">
-            <h2 className="text-lg font-black text-ink">Slack Help Center 기준 출처</h2>
+            <h2 className="text-lg font-black text-ink">공식 출처</h2>
             <p className="mt-2 text-sm font-semibold text-muted">{term.sourceName}</p>
             <a className="mt-2 block break-all text-sm font-bold text-primary" href={term.sourceUrl} rel="noreferrer" target="_blank">{term.sourceUrl}</a>
             <p className="mt-3 text-sm text-muted">마지막 확인일: {term.lastVerifiedAt}</p>

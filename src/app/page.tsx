@@ -29,7 +29,7 @@ export default function HomePage() {
           <div>
             <p className="inline-flex rounded-full bg-softPurple px-3 py-1 text-sm font-black text-primary">{siteConfig.siteName}</p>
             <h1 className="mt-5 max-w-4xl text-4xl font-black leading-tight text-ink md:text-6xl">
-              Slack 첫 설명은 이 순서로 시작하세요.
+              Slack 설명은 여기서 시작하세요.
             </h1>
             <p className="mt-5 max-w-3xl text-lg leading-8 text-muted">
               {siteConfig.description}입니다. 새 사용자 온보딩, 관리자 교육, 고객 미팅에서 바로 말할 수 있도록 핵심 용어와 운영 주의점을 함께 정리했습니다.

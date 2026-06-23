@@ -62,7 +62,7 @@ export const sources: Source[] = [
     category: "automation",
     area: "Workflow Builder",
     notes: "Workflow, trigger, step, connector 관련 기본 구조 확인용입니다.",
-    lastVerifiedAt: "2026-06-23"
+    lastVerifiedAt: "2026-06-24"
   },
   {
     id: "connectors",
@@ -80,7 +80,7 @@ export const sources: Source[] = [
     category: "using",
     area: "Lists",
     notes: "업무 항목과 상태를 Slack 안에서 정리하는 개념 확인용입니다.",
-    lastVerifiedAt: "2026-06-23"
+    lastVerifiedAt: "2026-06-24"
   },
   {
     id: "canvas",
@@ -98,7 +98,7 @@ export const sources: Source[] = [
     category: "admin",
     area: "Guest roles",
     notes: "Single-channel Guest, Multi-channel Guest의 접근 범위 확인용입니다.",
-    lastVerifiedAt: "2026-06-23"
+    lastVerifiedAt: "2026-06-24"
   },
   {
     id: "roles",
@@ -107,7 +107,7 @@ export const sources: Source[] = [
     category: "start",
     area: "역할과 권한",
     notes: "Owner, Admin, Member 등 역할 개념 확인용입니다.",
-    lastVerifiedAt: "2026-06-23"
+    lastVerifiedAt: "2026-06-24"
   },
   {
     id: "audit-logs",
@@ -134,7 +134,7 @@ export const sources: Source[] = [
     category: "pricing",
     area: "플랜",
     notes: "Enterprise+와 플랜별 기능 범위는 변경 가능성이 높아 실제 도입 전 재확인이 필요합니다.",
-    lastVerifiedAt: "2026-06-23"
+    lastVerifiedAt: "2026-06-24"
   },
   {
     id: "slack-connect",
@@ -143,7 +143,7 @@ export const sources: Source[] = [
     category: "using",
     area: "외부 조직 협업",
     notes: "외부 파트너, 공급업체, 고객과 채널이나 다이렉트 메시지로 협업하는 방식 확인용입니다.",
-    lastVerifiedAt: "2026-06-23"
+    lastVerifiedAt: "2026-06-24"
   },
   {
     id: "ekm",
@@ -152,7 +152,7 @@ export const sources: Source[] = [
     category: "pricing",
     area: "Enterprise Key Management",
     notes: "엔터프라이즈 보안과 암호화 키 관리 기능 확인용입니다.",
-    lastVerifiedAt: "2026-06-23"
+    lastVerifiedAt: "2026-06-24"
   },
   {
     id: "slackbot",
@@ -161,7 +161,7 @@ export const sources: Source[] = [
     category: "automation",
     area: "Slackbot",
     notes: "Slackbot과 퍼스널 AI 에이전트 관련 최신 표현 확인용입니다.",
-    lastVerifiedAt: "2026-06-23"
+    lastVerifiedAt: "2026-06-24"
   }
 ];
 

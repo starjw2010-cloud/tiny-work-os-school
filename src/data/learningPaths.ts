@@ -1,5 +1,5 @@
 import { getSource } from "@/data/sources";
-import { terms as termCatalog } from "@/data/terms";
+import { getTermLabel } from "@/data/terms";
 import type { LearningModule, LearningPath, MockupType, TrackId } from "@/types/content";
 
 type ModuleSeed = {
@@ -13,19 +13,8 @@ type ModuleSeed = {
   caution?: string;
 };
 
-const termLabelMap = new Map(
-  termCatalog.map((term) => [
-    term.slug,
-    term.koreanName === term.term ? term.term : `${term.koreanName}(${term.term})`
-  ])
-);
-
-function readableTerm(slug: string) {
-  return termLabelMap.get(slug) || slug;
-}
-
 function module(seed: ModuleSeed): LearningModule {
-  const labels = seed.terms.map(readableTerm);
+  const labels = seed.terms.map(getTermLabel);
   return {
     id: seed.id,
     title: seed.title,

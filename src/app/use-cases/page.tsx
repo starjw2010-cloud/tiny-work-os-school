@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PageHeader } from "@/components/PageHeader";
+import { getTermLabel } from "@/data/terms";
 import { useCases } from "@/data/useCases";
 
 export default function UseCasesPage() {
@@ -15,7 +16,13 @@ export default function UseCasesPage() {
             <p className="mt-4 text-sm leading-7 text-muted">운영 팁: {item.operatingTip}</p>
             <p className="mt-3 text-sm font-semibold leading-6 text-ink">{item.customerTalkTrack}</p>
             <p className="mt-3 text-xs leading-5 text-muted">주의사항: {item.caution}</p>
-            <div className="mt-4 flex flex-wrap gap-2">{item.relatedTerms.map((slug) => <Link className="rounded-md border border-line px-2 py-1 text-xs font-bold text-primary" href={'/terms/' + slug} key={slug}>{slug}</Link>)}</div>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {item.relatedTerms.map((slug) => (
+                <Link className="rounded-md border border-line px-2 py-1 text-xs font-bold text-primary" href={'/terms/' + slug} key={slug}>
+                  {getTermLabel(slug)}
+                </Link>
+              ))}
+            </div>
           </article>
         ))}
       </section>
